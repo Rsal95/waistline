@@ -617,3 +617,21 @@ window.addEventListener("keydown", (e) => {
 		e.preventDefault();
 	}
 });
+
+// NLP FUNCTIONALITY
+// Load NLP handler scripts
+app.NLPChat = app.NLPChat || {};
+var nlpScript = document.createElement('script');
+nlpScript.src = 'assets/js/nlp-handler.js';
+document.head.appendChild(nlpScript);
+
+// Load NLP chat controller
+var nlpControllerScript = document.createElement('script');
+nlpControllerScript.src = 'activities/nlp-chat/js/nlp-chat.js';
+document.head.appendChild(nlpControllerScript);
+
+// Load NLP CSS
+var nlpCss = document.createElement('link');
+nlpCss.rel = 'stylesheet';
+nlpCss.href = 'assets/css/nlp-chat.css';
+document.head.appendChild(nlpCss);
