@@ -12,7 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+
+    - name: Install Android SDK
+      uses: android-actions/setup-android@v3
     
+    - name: Install Android Build Tools
+      run: sdkmanager "build-tools;33.0.2"
+
     - name: Set up JDK
       uses: actions/setup-java@v3
       with:
