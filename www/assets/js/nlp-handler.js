@@ -2,7 +2,6 @@
  * NLP Handler for Waistline
  * Processes voice input for food diary entries
  */
-// Modify the end of your existing nlp-handler.js file:
 
 // Initialize when document is ready
 document.addEventListener('DOMContentLoaded', function() {
@@ -28,3 +27,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 2000);
   }
 });
+
+processInput: function(text) {
+  // Process the text input and return a response
+  const lowercaseText = text.toLowerCase();
+  
+  // Process the text input and return structured data
+  // First try to extract food item and portion
+  this.processCompleteStatement(text);
+  
+  // Return a response object to the controller
+  return {
+    success: true,
+    message: "I'm processing your food entry now.",
+    originalText: text
+  };
+}
