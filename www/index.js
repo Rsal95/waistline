@@ -628,7 +628,7 @@ window.addEventListener("keydown", (e) => {
   options: {
     transition: "f7-parallax"
   }
-},
+}
 // Load NLP handler scripts
 document.addEventListener('DOMContentLoaded', function() {
   app.NLPChat = app.NLPChat || {};
