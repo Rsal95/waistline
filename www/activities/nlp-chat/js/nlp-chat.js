@@ -162,4 +162,70 @@
     },
     
     onRecognitionEnd: function() {
-      this.isRecognizing = ▋
+      this.isRecognizing = false;
+      this.updateStatus("Ready");
+      $$('#start-voice-recognition i').removeClass('fa-stop').addClass('fa-microphone');
+    },
+    
+    updateOutput: function(text) {
+      // Update UI with recognition result
+      const outputContainer = $$('.nlp-messages-container');
+      if (outputContainer.length > 0) {
+        const messageEl = document.createElement('div');
+        messageEl.className = 'message';
+        
+        // Determine if this is a user or assistant message
+        if (text.startsWith('You said:')) {
+          messageEl.classList.add('user-message');
+        } else {
+          messageEl.classList.add('app-message');
+        }
+        
+        messageEl.textContent = text;
+        outputContainer.append(messageEl);
+        outputContainer[0].scrollTop = outputContainer[0].scrollHeight;
+      }
+    },
+    
+    updateStatus: function(status) {
+      // Update status display
+      const statusEl = $$('#nlp-status');
+      if (statusEl.length > 0) {
+        statusEl.text(status);
+      }
+    }
+  };
+  
+  // Initialize when document is ready
+  $$(document).on('page:init', '.page[data-name="nlp-chat"]', function (e) {
+    NLPChatController.init();
+    
+    // Bind event handlers for the chat interface
+    $$(document).on('click', '#nlp-mic-button', function() {
+      if (window.nlpHandler) {
+        window.nlpHandler.startListening();
+      } else {
+        console.error("NLP Handler not initialized");
+      }
+    });
+    
+    $$(document).on('click', '#nlp-send-button', function() {
+      const input = $$('#nlp-text-input');
+      const text = input.val().trim();
+      
+      if (text) {
+        if (window.nlpHandler) {
+          window.nlpHandler.addMessageToChat(text, 'user');
+          const response = window.nlpHandler.processCompleteStatement(text);
+          input.val('');
+        } else {
+          console.error("NLP Handler not initialized");
+        }
+      }
+    });
+  });
+  
+  // Export to app namespace
+  app.NLPChat = app.NLPChat || {};
+  app.NLPChat.controller = NLPChatController;
+})();
