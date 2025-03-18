@@ -3,6 +3,35 @@
  * Processes voice input for food diary entries
  */
 
+// NLP handler object definition
+var nlpHandler = {
+  init: function() {
+    // Initialization code here
+    console.log("NLP Handler initialized");
+  },
+  
+  processInput: function(text) {
+    // Process the text input and return a response
+    const lowercaseText = text.toLowerCase();
+
+    // Process the text input and return structured data
+    // First try to extract food item and portion
+    this.processCompleteStatement(text);
+
+    // Return a response object to the controller
+    return {
+      success: true,
+      message: "I'm processing your food entry now.",
+      originalText: text
+    };
+  },
+
+  processCompleteStatement: function(text) {
+    // Your processing logic here
+    console.log("Processing statement:", text);
+  }
+};
+
 // Initialize when document is ready
 document.addEventListener('DOMContentLoaded', function() {
   // Wait for app to be initialized
@@ -27,19 +56,3 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 2000);
   }
 });
-
-processInput: function(text) {
-  // Process the text input and return a response
-  const lowercaseText = text.toLowerCase();
-  
-  // Process the text input and return structured data
-  // First try to extract food item and portion
-  this.processCompleteStatement(text);
-  
-  // Return a response object to the controller
-  return {
-    success: true,
-    message: "I'm processing your food entry now.",
-    originalText: text
-  };
-}
