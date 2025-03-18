@@ -1,30 +1,31 @@
 .nlp-messages-container {
-  padding: 16px;
-  overflow-y: auto;
-  height: calc(100% - 70px);
   display: flex;
   flex-direction: column;
+  padding: 16px;
+  overflow-y: auto;
+  height: calc(100% - 60px);
 }
 
 .message {
-  margin-bottom: 16px;
   max-width: 80%;
-  padding: 10px 16px;
+  padding: 10px 15px;
+  margin-bottom: 8px;
   border-radius: 18px;
-  position: relative;
   word-break: break-word;
 }
 
 .user-message {
-  background-color: #DCF8C6;
   align-self: flex-end;
-  border-top-right-radius: 4px;
+  background-color: #007aff;
+  color: white;
+  border-bottom-right-radius: 4px;
 }
 
 .app-message {
-  background-color: #ECECEC;
   align-self: flex-start;
-  border-top-left-radius: 4px;
+  background-color: #e5e5ea;
+  color: #000;
+  border-bottom-left-radius: 4px;
 }
 
 .nlp-input-container {
@@ -33,45 +34,51 @@
   left: 0;
   right: 0;
   padding: 10px;
-  background-color: #fff;
-  border-top: 1px solid #e0e0e0;
-  display: flex;
-  z-index: 100;
+  background-color: #f7f7f8;
+  border-top: 1px solid #c8c7cc;
 }
 
 .nlp-input-wrapper {
   display: flex;
-  width: 100%;
+  align-items: center;
 }
 
 #nlp-text-input {
   flex: 1;
   border-radius: 20px;
-  border: 1px solid #e0e0e0;
-  padding: 8px 16px;
+  padding: 10px 15px;
   margin-right: 8px;
+  border: 1px solid #c8c7cc;
 }
 
-#nlp-send-button,
-#nlp-mic-button {
+#nlp-mic-button, #nlp-send-button {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 8px;
-  background-color: #973939;
-  color: white;
+  margin-left: 5px;
 }
 
 #nlp-mic-button.active {
-  animation: pulse 1s infinite;
-  background-color: #c23838;
+  background-color: #ff3b30;
+  color: white;
 }
 
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
+/* Dark mode support */
+.theme-dark .app-message {
+  background-color: #2c2c2e;
+  color: #fff;
+}
+
+.theme-dark .nlp-input-container {
+  background-color: #1c1c1d;
+  border-top-color: #38383a;
+}
+
+.theme-dark #nlp-text-input {
+  background-color: #2c2c2e;
+  border-color: #38383a;
+  color: #fff;
 }
