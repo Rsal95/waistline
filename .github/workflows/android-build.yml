@@ -28,8 +28,7 @@ jobs:
         cordova plugin add cordova-plugin-android-permissions
         cordova plugin add cordova-plugin-androidx
         cordova plugin add cordova-plugin-androidx-adapter
-
-
+    
     - name: Set up JDK
       uses: actions/setup-java@v3
       with:
