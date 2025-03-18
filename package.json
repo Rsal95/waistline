@@ -40,6 +40,9 @@
       "cordova-plugin-x-socialsharing": {},
       "phonegap-plugin-barcodescanner": {
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      },
+      "cordova-plugin-speechrecognition": {},
+      "cordova-plugin-android-permissions": {}
       }
     },
     "platforms": [
