@@ -620,13 +620,14 @@ window.addEventListener("keydown", (e) => {
 
 
 /// NLP FUNCTIONALITY
+// Find the existing routes array in index.js and add this route:
 {
-    name: "Voice Assistant",
-    path: "/nlp-chat/",
-    url: "activities/nlp-chat/views/nlp-chat.html",
-    options: {
-        transition: "f7-parallax"
-    }
+  name: "Voice Assistant",
+  path: "/nlp-chat/",
+  url: "activities/nlp-chat/views/nlp-chat.html",
+  options: {
+    transition: "f7-parallax"
+  }
 },
 // Load NLP handler scripts
 document.addEventListener('DOMContentLoaded', function() {
