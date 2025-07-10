@@ -114,7 +114,9 @@
     onRecognitionStart: function() {
       this.isRecognizing = true;
       this.updateStatus("Listening...");
-      $$('#start-voice-recognition i').removeClass('fa-microphone').addClass('fa-stop');
+      const micButton = $$('#nlp-mic-button');
+      micButton.addClass('active');
+      micButton.html('<i class="icon f7-icons if-not-md">stop_fill</i><i class="icon material-icons md-only">stop</i>');
     },
     
     onRecognitionResult: function(event) {
@@ -122,14 +124,10 @@
         const result = event.results[event.results.length - 1];
         if (result.isFinal) {
           const transcript = result[0].transcript;
-          this.updateOutput("You said: " + transcript);
           
           // Process with NLP handler
-          if (app.NLPChat && app.NLPChat.handler) {
-            const response = app.NLPChat.handler.processInput(transcript);
-            setTimeout(() => {
-              this.updateOutput("Assistant: " + response.message);
-            }, 500);
+          if (window.nlpHandler) {
+            window.nlpHandler.processCompleteStatement(transcript);
           } else {
             console.error("NLP Handler not available");
             this.updateOutput("Assistant: I'm having trouble understanding right now. Please try again later.");
@@ -158,13 +156,17 @@
       this.updateOutput(errorMsg);
       this.updateStatus("Error");
       this.isRecognizing = false;
-      $$('#start-voice-recognition i').removeClass('fa-stop').addClass('fa-microphone');
+      const micButton = $$('#nlp-mic-button');
+      micButton.removeClass('active');
+      micButton.html('<i class="icon f7-icons if-not-md">mic_fill</i><i class="icon material-icons md-only">mic</i>');
     },
     
     onRecognitionEnd: function() {
       this.isRecognizing = false;
       this.updateStatus("Ready");
-      $$('#start-voice-recognition i').removeClass('fa-stop').addClass('fa-microphone');
+      const micButton = $$('#nlp-mic-button');
+      micButton.removeClass('active');
+      micButton.html('<i class="icon f7-icons if-not-md">mic_fill</i><i class="icon material-icons md-only">mic</i>');
     },
     
     updateOutput: function(text) {
@@ -202,24 +204,26 @@
     
     // Bind event handlers for the chat interface
     $$(document).on('click', '#nlp-mic-button', function() {
-      if (window.nlpHandler) {
-        window.nlpHandler.startListening();
-      } else {
-        console.error("NLP Handler not initialized");
-      }
+      NLPChatController.toggleSpeechRecognition();
     });
     
     $$(document).on('click', '#nlp-send-button', function() {
       const input = $$('#nlp-text-input');
       const text = input.val().trim();
       
-      if (text) {
-        if (window.nlpHandler) {
-          window.nlpHandler.addMessageToChat(text, 'user');
-          const response = window.nlpHandler.processCompleteStatement(text);
-          input.val('');
-        } else {
-          console.error("NLP Handler not initialized");
+      if (text && window.nlpHandler) {
+        window.nlpHandler.processCompleteStatement(text);
+        input.val('');
+      }
+    });
+    
+    // Handle Enter key in text input
+    $$(document).on('keydown', '#nlp-text-input', function(e) {
+      if (e.keyCode === 13) { // Enter key
+        const text = $$(this).val().trim();
+        if (text && window.nlpHandler) {
+          window.nlpHandler.processCompleteStatement(text);
+          $$(this).val('');
         }
       }
     });
